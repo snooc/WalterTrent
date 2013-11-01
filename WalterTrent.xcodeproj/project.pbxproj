@@ -8,14 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		06A179B11822D5C8003A68F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179B01822D5C8003A68F5 /* Foundation.framework */; };
-		06A179B61822D5C8003A68F5 /* WalterTrent.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 06A179B51822D5C8003A68F5 /* WalterTrent.h */; };
-		06A179B81822D5C8003A68F5 /* WalterTrent.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179B71822D5C8003A68F5 /* WalterTrent.m */; };
 		06A179BF1822D5C8003A68F5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179BE1822D5C8003A68F5 /* XCTest.framework */; };
 		06A179C01822D5C8003A68F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179B01822D5C8003A68F5 /* Foundation.framework */; };
 		06A179C21822D5C8003A68F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179C11822D5C8003A68F5 /* UIKit.framework */; };
 		06A179C51822D5C8003A68F5 /* libWalterTrent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179AD1822D5C8003A68F5 /* libWalterTrent.a */; };
 		06A179CB1822D5C8003A68F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 06A179C91822D5C8003A68F5 /* InfoPlist.strings */; };
-		06A179CD1822D5C8003A68F5 /* WalterTrentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179CC1822D5C8003A68F5 /* WalterTrentTests.m */; };
+		06A179D81822E2B8003A68F5 /* WTDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179D71822E2B8003A68F5 /* WTDatabaseManager.m */; };
+		06A179D91822E2B8003A68F5 /* WTDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179D71822E2B8003A68F5 /* WTDatabaseManager.m */; };
+		06A179DC1822E2C9003A68F5 /* WTDatabaseSchemaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179DB1822E2C9003A68F5 /* WTDatabaseSchemaManager.m */; };
+		06A179DD1822E2C9003A68F5 /* WTDatabaseSchemaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179DB1822E2C9003A68F5 /* WTDatabaseSchemaManager.m */; };
+		06A179E01822E412003A68F5 /* WTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179DF1822E412003A68F5 /* WTModel.m */; };
+		06A179E11822E412003A68F5 /* WTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179DF1822E412003A68F5 /* WTModel.m */; };
+		06A179E41822E41A003A68F5 /* WTDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179E31822E41A003A68F5 /* WTDatabase.m */; };
+		06A179E51822E41A003A68F5 /* WTDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179E31822E41A003A68F5 /* WTDatabase.m */; };
+		06A179EB1822F5D4003A68F5 /* WTDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179EA1822F5D4003A68F5 /* WTDatabaseTests.m */; };
+		06A179F11823D4C2003A68F5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179EC1822F8BE003A68F5 /* libsqlite3.dylib */; };
+		06A179F21823D4F7003A68F5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179EC1822F8BE003A68F5 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +43,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				06A179B61822D5C8003A68F5 /* WalterTrent.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,14 +52,22 @@
 		06A179AD1822D5C8003A68F5 /* libWalterTrent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWalterTrent.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		06A179B01822D5C8003A68F5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		06A179B41822D5C8003A68F5 /* WalterTrent-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WalterTrent-Prefix.pch"; sourceTree = "<group>"; };
-		06A179B51822D5C8003A68F5 /* WalterTrent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WalterTrent.h; sourceTree = "<group>"; };
-		06A179B71822D5C8003A68F5 /* WalterTrent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalterTrent.m; sourceTree = "<group>"; };
 		06A179BD1822D5C8003A68F5 /* WalterTrentTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalterTrentTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		06A179BE1822D5C8003A68F5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		06A179C11822D5C8003A68F5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		06A179C81822D5C8003A68F5 /* WalterTrentTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WalterTrentTests-Info.plist"; sourceTree = "<group>"; };
 		06A179CA1822D5C8003A68F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		06A179CC1822D5C8003A68F5 /* WalterTrentTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WalterTrentTests.m; sourceTree = "<group>"; };
+		06A179D61822E2B8003A68F5 /* WTDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTDatabaseManager.h; sourceTree = "<group>"; };
+		06A179D71822E2B8003A68F5 /* WTDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTDatabaseManager.m; sourceTree = "<group>"; };
+		06A179DA1822E2C9003A68F5 /* WTDatabaseSchemaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTDatabaseSchemaManager.h; sourceTree = "<group>"; };
+		06A179DB1822E2C9003A68F5 /* WTDatabaseSchemaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTDatabaseSchemaManager.m; sourceTree = "<group>"; };
+		06A179DE1822E412003A68F5 /* WTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTModel.h; sourceTree = "<group>"; };
+		06A179DF1822E412003A68F5 /* WTModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTModel.m; sourceTree = "<group>"; };
+		06A179E21822E41A003A68F5 /* WTDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTDatabase.h; sourceTree = "<group>"; };
+		06A179E31822E41A003A68F5 /* WTDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTDatabase.m; sourceTree = "<group>"; };
+		06A179EA1822F5D4003A68F5 /* WTDatabaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTDatabaseTests.m; sourceTree = "<group>"; };
+		06A179EC1822F8BE003A68F5 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		06A179EF1823D382003A68F5 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06A179F11823D4C2003A68F5 /* libsqlite3.dylib in Frameworks */,
 				06A179B11822D5C8003A68F5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06A179F21823D4F7003A68F5 /* libsqlite3.dylib in Frameworks */,
 				06A179BF1822D5C8003A68F5 /* XCTest.framework in Frameworks */,
 				06A179C21822D5C8003A68F5 /* UIKit.framework in Frameworks */,
 				06A179C51822D5C8003A68F5 /* libWalterTrent.a in Frameworks */,
@@ -100,6 +117,8 @@
 		06A179AF1822D5C8003A68F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				06A179EF1823D382003A68F5 /* libsqlite3.0.dylib */,
+				06A179EC1822F8BE003A68F5 /* libsqlite3.dylib */,
 				06A179B01822D5C8003A68F5 /* Foundation.framework */,
 				06A179BE1822D5C8003A68F5 /* XCTest.framework */,
 				06A179C11822D5C8003A68F5 /* UIKit.framework */,
@@ -110,9 +129,15 @@
 		06A179B21822D5C8003A68F5 /* WalterTrent */ = {
 			isa = PBXGroup;
 			children = (
-				06A179B51822D5C8003A68F5 /* WalterTrent.h */,
-				06A179B71822D5C8003A68F5 /* WalterTrent.m */,
 				06A179B31822D5C8003A68F5 /* Supporting Files */,
+				06A179D61822E2B8003A68F5 /* WTDatabaseManager.h */,
+				06A179D71822E2B8003A68F5 /* WTDatabaseManager.m */,
+				06A179DA1822E2C9003A68F5 /* WTDatabaseSchemaManager.h */,
+				06A179DB1822E2C9003A68F5 /* WTDatabaseSchemaManager.m */,
+				06A179DE1822E412003A68F5 /* WTModel.h */,
+				06A179DF1822E412003A68F5 /* WTModel.m */,
+				06A179E21822E41A003A68F5 /* WTDatabase.h */,
+				06A179E31822E41A003A68F5 /* WTDatabase.m */,
 			);
 			path = WalterTrent;
 			sourceTree = "<group>";
@@ -128,7 +153,7 @@
 		06A179C61822D5C8003A68F5 /* WalterTrentTests */ = {
 			isa = PBXGroup;
 			children = (
-				06A179CC1822D5C8003A68F5 /* WalterTrentTests.m */,
+				06A179EA1822F5D4003A68F5 /* WTDatabaseTests.m */,
 				06A179C71822D5C8003A68F5 /* Supporting Files */,
 			);
 			path = WalterTrentTests;
@@ -224,7 +249,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06A179B81822D5C8003A68F5 /* WalterTrent.m in Sources */,
+				06A179E01822E412003A68F5 /* WTModel.m in Sources */,
+				06A179DC1822E2C9003A68F5 /* WTDatabaseSchemaManager.m in Sources */,
+				06A179D81822E2B8003A68F5 /* WTDatabaseManager.m in Sources */,
+				06A179E41822E41A003A68F5 /* WTDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +260,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06A179CD1822D5C8003A68F5 /* WalterTrentTests.m in Sources */,
+				06A179E11822E412003A68F5 /* WTModel.m in Sources */,
+				06A179EB1822F5D4003A68F5 /* WTDatabaseTests.m in Sources */,
+				06A179DD1822E2C9003A68F5 /* WTDatabaseSchemaManager.m in Sources */,
+				06A179D91822E2B8003A68F5 /* WTDatabaseManager.m in Sources */,
+				06A179E51822E41A003A68F5 /* WTDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

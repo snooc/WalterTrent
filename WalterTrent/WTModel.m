@@ -1,13 +1,13 @@
 //
-//  WalterTrent.h
+//  WTModel.m
 //  WalterTrent
 //
 //  Created by Cody Coons on 10/31/13.
 //  Copyright (c) 2013 Cody Coons. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "WTModel.h"
 
-@interface WalterTrent : NSObject
+@implementation WTModel
 
 @end
