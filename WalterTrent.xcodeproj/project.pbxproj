@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		069528F01824235D007159B6 /* libsqlcipher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 069528EF18242338007159B6 /* libsqlcipher.a */; };
 		06A179B11822D5C8003A68F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179B01822D5C8003A68F5 /* Foundation.framework */; };
 		06A179BF1822D5C8003A68F5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179BE1822D5C8003A68F5 /* XCTest.framework */; };
 		06A179C01822D5C8003A68F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179B01822D5C8003A68F5 /* Foundation.framework */; };
@@ -22,11 +23,24 @@
 		06A179E41822E41A003A68F5 /* WTDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179E31822E41A003A68F5 /* WTDatabase.m */; };
 		06A179E51822E41A003A68F5 /* WTDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179E31822E41A003A68F5 /* WTDatabase.m */; };
 		06A179EB1822F5D4003A68F5 /* WTDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 06A179EA1822F5D4003A68F5 /* WTDatabaseTests.m */; };
-		06A179F11823D4C2003A68F5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179EC1822F8BE003A68F5 /* libsqlite3.dylib */; };
 		06A179F21823D4F7003A68F5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179EC1822F8BE003A68F5 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		069528EE18242338007159B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 069528E918242338007159B6 /* sqlcipher.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
+			remoteInfo = sqlcipher;
+		};
+		069528F118242364007159B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 069528E918242338007159B6 /* sqlcipher.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = sqlcipher;
+		};
 		06A179C31822D5C8003A68F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 06A179A51822D5C8003A68F5 /* Project object */;
@@ -49,6 +63,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		069528E918242338007159B6 /* sqlcipher.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlcipher.xcodeproj; path = Vendor/sqlcipher/sqlcipher.xcodeproj; sourceTree = "<group>"; };
 		06A179AD1822D5C8003A68F5 /* libWalterTrent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWalterTrent.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		06A179B01822D5C8003A68F5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		06A179B41822D5C8003A68F5 /* WalterTrent-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WalterTrent-Prefix.pch"; sourceTree = "<group>"; };
@@ -75,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06A179F11823D4C2003A68F5 /* libsqlite3.dylib in Frameworks */,
+				069528F01824235D007159B6 /* libsqlcipher.a in Frameworks */,
 				06A179B11822D5C8003A68F5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,9 +110,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		069528EA18242338007159B6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				069528EF18242338007159B6 /* libsqlcipher.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		06A179A41822D5C8003A68F5 = {
 			isa = PBXGroup;
 			children = (
+				069528E918242338007159B6 /* sqlcipher.xcodeproj */,
 				06A179B21822D5C8003A68F5 /* WalterTrent */,
 				06A179C61822D5C8003A68F5 /* WalterTrentTests */,
 				06A179AF1822D5C8003A68F5 /* Frameworks */,
@@ -182,6 +206,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				069528F218242364007159B6 /* PBXTargetDependency */,
 			);
 			name = WalterTrent;
 			productName = WalterTrent;
@@ -225,6 +250,12 @@
 			mainGroup = 06A179A41822D5C8003A68F5;
 			productRefGroup = 06A179AE1822D5C8003A68F5 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 069528EA18242338007159B6 /* Products */;
+					ProjectRef = 069528E918242338007159B6 /* sqlcipher.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				06A179AC1822D5C8003A68F5 /* WalterTrent */,
@@ -232,6 +263,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		069528EF18242338007159B6 /* libsqlcipher.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libsqlcipher.a;
+			remoteRef = 069528EE18242338007159B6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		06A179BB1822D5C8003A68F5 /* Resources */ = {
@@ -271,6 +312,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		069528F218242364007159B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = sqlcipher;
+			targetProxy = 069528F118242364007159B6 /* PBXContainerItemProxy */;
+		};
 		06A179C41822D5C8003A68F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 06A179AC1822D5C8003A68F5 /* WalterTrent */;
@@ -441,6 +487,7 @@
 				06A179D21822D5C8003A68F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		06A179D31822D5C8003A68F5 /* Build configuration list for PBXNativeTarget "WalterTrentTests" */ = {
 			isa = XCConfigurationList;
@@ -449,6 +496,7 @@
 				06A179D51822D5C8003A68F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
