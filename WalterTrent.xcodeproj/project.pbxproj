@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		069528F01824235D007159B6 /* libsqlcipher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 069528EF18242338007159B6 /* libsqlcipher.a */; };
+		069528F918243ADA007159B6 /* XCTestCase+WTDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 069528F818243ADA007159B6 /* XCTestCase+WTDatabase.m */; };
+		069528FB18243C53007159B6 /* WTDatabaseManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 069528FA18243C53007159B6 /* WTDatabaseManagerTests.m */; };
 		06A179B11822D5C8003A68F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179B01822D5C8003A68F5 /* Foundation.framework */; };
 		06A179BF1822D5C8003A68F5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179BE1822D5C8003A68F5 /* XCTest.framework */; };
 		06A179C01822D5C8003A68F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A179B01822D5C8003A68F5 /* Foundation.framework */; };
@@ -64,6 +66,9 @@
 
 /* Begin PBXFileReference section */
 		069528E918242338007159B6 /* sqlcipher.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlcipher.xcodeproj; path = Vendor/sqlcipher/sqlcipher.xcodeproj; sourceTree = "<group>"; };
+		069528F718243ADA007159B6 /* XCTestCase+WTDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+WTDatabase.h"; sourceTree = "<group>"; };
+		069528F818243ADA007159B6 /* XCTestCase+WTDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+WTDatabase.m"; sourceTree = "<group>"; };
+		069528FA18243C53007159B6 /* WTDatabaseManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTDatabaseManagerTests.m; sourceTree = "<group>"; };
 		06A179AD1822D5C8003A68F5 /* libWalterTrent.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWalterTrent.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		06A179B01822D5C8003A68F5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		06A179B41822D5C8003A68F5 /* WalterTrent-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WalterTrent-Prefix.pch"; sourceTree = "<group>"; };
@@ -178,6 +183,9 @@
 			isa = PBXGroup;
 			children = (
 				06A179EA1822F5D4003A68F5 /* WTDatabaseTests.m */,
+				069528FA18243C53007159B6 /* WTDatabaseManagerTests.m */,
+				069528F718243ADA007159B6 /* XCTestCase+WTDatabase.h */,
+				069528F818243ADA007159B6 /* XCTestCase+WTDatabase.m */,
 				06A179C71822D5C8003A68F5 /* Supporting Files */,
 			);
 			path = WalterTrentTests;
@@ -303,7 +311,9 @@
 			files = (
 				06A179E11822E412003A68F5 /* WTModel.m in Sources */,
 				06A179EB1822F5D4003A68F5 /* WTDatabaseTests.m in Sources */,
+				069528F918243ADA007159B6 /* XCTestCase+WTDatabase.m in Sources */,
 				06A179DD1822E2C9003A68F5 /* WTDatabaseSchemaManager.m in Sources */,
+				069528FB18243C53007159B6 /* WTDatabaseManagerTests.m in Sources */,
 				06A179D91822E2B8003A68F5 /* WTDatabaseManager.m in Sources */,
 				06A179E51822E41A003A68F5 /* WTDatabase.m in Sources */,
 			);
@@ -412,6 +422,7 @@
 				DSTROOT = /tmp/WalterTrent.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WalterTrent/WalterTrent-Prefix.pch";
+				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -424,6 +435,7 @@
 				DSTROOT = /tmp/WalterTrent.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WalterTrent/WalterTrent-Prefix.pch";
+				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -446,6 +458,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "WalterTrentTests/WalterTrentTests-Info.plist";
+				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -463,6 +476,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WalterTrent/WalterTrent-Prefix.pch";
 				INFOPLIST_FILE = "WalterTrentTests/WalterTrentTests-Info.plist";
+				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};

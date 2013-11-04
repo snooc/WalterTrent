@@ -19,6 +19,8 @@ int const kWTDatabaseSQLStatementFailedCode = -1;
 
 + (NSError *)errorWithSQLiteErrorPointer:(char *)errorPointer;
 
+- (void)setKeyWithData:(NSData *)keyData queue:(dispatch_queue_t)queue;
+
 @end
 
 @implementation WTDatabase
@@ -65,42 +67,69 @@ int const kWTDatabaseSQLStatementFailedCode = -1;
     return self;
 }
 
+#pragma mark - Database Keying
+
+- (void)setKey:(NSString *)key
+{
+    NSData *keyData = [NSData dataWithBytes:[key UTF8String] length:(NSUInteger)strlen([key UTF8String])];
+    
+    [self setKeyWithData:keyData queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+}
+
+- (void)setKey:(NSString *)key queue:(dispatch_queue_t)queue
+{
+    NSData *keyData = [NSData dataWithBytes:[key UTF8String] length:(NSUInteger)strlen([key UTF8String])];
+    
+    [self setKeyWithData:keyData queue:queue];
+}
+
+- (void)setKeyWithData:(NSData *)keyData queue:(dispatch_queue_t)queue
+{
+    __weak WTDatabase *weakSelf = self;
+    dispatch_sync(queue, ^{
+        WTDatabase *strongSelf = weakSelf;
+        
+        sqlite3_key(strongSelf.database, [keyData bytes], (int)[keyData length]);
+    });
+}
+
 #pragma mark - Database Execution
 
-- (BOOL)execute:(NSString *)statement error:(NSError *__autoreleasing *)error
+- (void)execute:(NSString *)statement completion:(WTDatabaseCompletionBlock)completion
 {
-    return [self execute:statement queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) error:error];
+    [self execute:statement queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) completion:completion];
 }
 
-- (void)execute:(NSString *)statement handler:(WTDatabaseHandlerBlock)handlerBlock
+- (void)execute:(NSString *)statement queue:(dispatch_queue_t)queue completion:(WTDatabaseCompletionBlock)completion
 {
-    [self execute:statement queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) handler:handlerBlock];
-}
-
-- (BOOL)execute:(NSString *)statement queue:(dispatch_queue_t)queue error:(NSError *__autoreleasing *)error
-{
-    __block BOOL executionSuccess = NO;
     __weak WTDatabase *weakSelf = self;
     dispatch_sync(queue, ^() {
         WTDatabase *strongSelf = weakSelf;
+        NSError *error;
         char *errorPointer;
+        BOOL databaseHasError = NO;
         
         if (sqlite3_exec(strongSelf.database, [statement UTF8String], NULL, NULL, &errorPointer) == SQLITE_OK) {
-            executionSuccess = YES;
+            databaseHasError = NO;
         } else {
-            if (error) {
-                *error = [[self class] errorWithSQLiteErrorPointer:errorPointer];
-                sqlite3_free(errorPointer);
-                
-                executionSuccess = NO;
-            }
+            error = [[strongSelf class] errorWithSQLiteErrorPointer:errorPointer];
+            sqlite3_free(errorPointer);
+            
+            databaseHasError = YES;
+        }
+       
+        if (completion) {
+            completion(databaseHasError, error);
         }
     });
-    
-    return executionSuccess;
 }
 
-- (void)execute:(NSString *)statement queue:(dispatch_queue_t)queue handler:(WTDatabaseHandlerBlock)handlerBlock
+- (void)executeQuery:(NSString *)statement handler:(WTDatabaseHandlerBlock)handler
+{
+    [self executeQuery:statement queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) handler:handler];
+}
+
+- (void)executeQuery:(NSString *)statement queue:(dispatch_queue_t)queue handler:(WTDatabaseHandlerBlock)handler
 {
     __weak WTDatabase *weakSelf = self;
     dispatch_sync(queue, ^() {
@@ -109,8 +138,8 @@ int const kWTDatabaseSQLStatementFailedCode = -1;
         
         if (sqlite3_prepare_v2(strongSelf.database, [statement UTF8String], -1, &stmt, NULL) == SQLITE_OK) {
             while (sqlite3_step(stmt) == SQLITE_ROW) {
-                if (handlerBlock) {
-                    handlerBlock(strongSelf.database, stmt, NO);
+                if (handler) {
+                    handler(strongSelf.database, stmt, NO);
                 }
             }
         }
@@ -123,12 +152,35 @@ int const kWTDatabaseSQLStatementFailedCode = -1;
 
 - (void)open
 {
-    sqlite3_open([self.databasePath UTF8String], &_database);
+    [self openWithQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+}
+
+- (void)openWithQueue:(dispatch_queue_t)queue
+{
+    __weak WTDatabase *weakSelf = self;
+    dispatch_sync(queue, ^() {
+        WTDatabase *strongSelf = weakSelf;
+        sqlite3 *db = strongSelf.database;
+        
+        sqlite3_open([strongSelf.databasePath UTF8String], &db);
+        
+        strongSelf.database = db;
+    });
 }
 
 - (void)close
 {
-    sqlite3_close(self.database);
+    [self closeWithQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+}
+
+- (void)closeWithQueue:(dispatch_queue_t)queue
+{
+    __weak WTDatabase *weakSelf = self;
+    dispatch_sync(queue, ^() {
+        WTDatabase *strongSelf = weakSelf;
+        
+        sqlite3_close(strongSelf.database);
+    });
 }
 
 #pragma mark - SQLite Error Handling

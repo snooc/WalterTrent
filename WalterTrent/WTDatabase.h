@@ -6,9 +6,10 @@
 //  Copyright (c) 2013 Cody Coons. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <sqlite3.h>
 
 typedef void (^WTDatabaseHandlerBlock)(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError);
+typedef void (^WTDatabaseCompletionBlock)(BOOL databaseHasError, NSError *error);
 
 extern NSString *const kWTDatabaseErrorDomain;
 extern int const kWTDatabaseSQLStatementFailedCode;
@@ -32,12 +33,16 @@ extern int const kWTDatabaseSQLStatementFailedCode;
 - (id)initWithDatabaseURL:(NSURL *)databaseURL KDFIterations:(NSUInteger)KDFIterations;
 - (id)initWithDatabaseURL:(NSURL *)databaseURL KDFIterations:(NSUInteger)KDFIterations HMACPageProtection:(BOOL)HMACPageProtection;
 
-- (BOOL)execute:(NSString *)statement error:(NSError **)error;
-- (void)execute:(NSString *)statement handler:(WTDatabaseHandlerBlock)handlerBlock;
-- (BOOL)execute:(NSString *)statement queue:(dispatch_queue_t)queue error:(NSError **)error;
-- (void)execute:(NSString *)statement queue:(dispatch_queue_t)queue handler:(WTDatabaseHandlerBlock)handlerBlock;
+- (void)setKey:(NSString *)key;
+
+- (void)execute:(NSString *)statement completion:(WTDatabaseCompletionBlock)completion;
+- (void)execute:(NSString *)statement queue:(dispatch_queue_t)queue completion:(WTDatabaseCompletionBlock)completion;
+- (void)executeQuery:(NSString *)statement handler:(WTDatabaseHandlerBlock)handler;
+- (void)executeQuery:(NSString *)statement queue:(dispatch_queue_t)queue handler:(WTDatabaseHandlerBlock)handler;
 
 - (void)open;
+- (void)openWithQueue:(dispatch_queue_t)queue;
 - (void)close;
+- (void)closeWithQueue:(dispatch_queue_t)queue;
 
 @end
