@@ -30,6 +30,7 @@
 + (void)deleteTempDatabaseWithURL:(NSURL *)databaseURL
 {
     NSFileManager *manger = [NSFileManager defaultManager];
+    NSLog(@"DB AT: %@", [databaseURL path]);
     [manger removeItemAtURL:databaseURL error:nil];
 }
 

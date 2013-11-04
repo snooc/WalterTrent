@@ -82,4 +82,14 @@
     }];
 }
 
+#pragma mark - Database Keying
+
+- (void)testDatabaseKeying
+{
+    __weak WTDatabaseTests *weakSelf = self;
+    [weakSelf.db setKey:@"secret" completion:^(BOOL databaseHasError, NSError *error) {
+        XCTAssertFalse(databaseHasError, @"Database should not have a keying error");
+    }];
+}
+
 @end

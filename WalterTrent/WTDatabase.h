@@ -10,9 +10,11 @@
 
 typedef void (^WTDatabaseHandlerBlock)(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError);
 typedef void (^WTDatabaseCompletionBlock)(BOOL databaseHasError, NSError *error);
+typedef void (^WTDatabaseKeyingCompletionBlock)(BOOL databaseHasError, NSError *error);
 
 extern NSString *const kWTDatabaseErrorDomain;
 extern int const kWTDatabaseSQLStatementFailedCode;
+extern int const kWTDatabaseSQLKeyFailedCode;
 
 @interface WTDatabase : NSObject
 
@@ -33,7 +35,9 @@ extern int const kWTDatabaseSQLStatementFailedCode;
 - (id)initWithDatabaseURL:(NSURL *)databaseURL KDFIterations:(NSUInteger)KDFIterations;
 - (id)initWithDatabaseURL:(NSURL *)databaseURL KDFIterations:(NSUInteger)KDFIterations HMACPageProtection:(BOOL)HMACPageProtection;
 
-- (void)setKey:(NSString *)key;
+- (void)setKey:(NSString *)key completion:(WTDatabaseKeyingCompletionBlock)completion;
+- (void)setKey:(NSString *)key queue:(dispatch_queue_t)queue completion:(WTDatabaseKeyingCompletionBlock)completion;
+- (void)setKeyWithData:(NSData *)keyData queue:(dispatch_queue_t)queue completion:(WTDatabaseKeyingCompletionBlock)completion;
 
 - (void)execute:(NSString *)statement completion:(WTDatabaseCompletionBlock)completion;
 - (void)execute:(NSString *)statement queue:(dispatch_queue_t)queue completion:(WTDatabaseCompletionBlock)completion;

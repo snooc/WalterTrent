@@ -14,12 +14,12 @@ static BOOL const kWTDatabaseDefaultHMACPageProtection = YES;
 
 NSString *const kWTDatabaseErrorDomain = @"WTDatabaseErrorDomain";
 int const kWTDatabaseSQLStatementFailedCode = -1;
+int const kWTDatabaseSQLKeyFailedCode = -10;
 
 @interface WTDatabase ()
 
 + (NSError *)errorWithSQLiteErrorPointer:(char *)errorPointer;
-
-- (void)setKeyWithData:(NSData *)keyData queue:(dispatch_queue_t)queue;
++ (NSError *)errorForSQLiteKeying;
 
 @end
 
@@ -69,27 +69,36 @@ int const kWTDatabaseSQLStatementFailedCode = -1;
 
 #pragma mark - Database Keying
 
-- (void)setKey:(NSString *)key
+- (void)setKey:(NSString *)key completion:(WTDatabaseKeyingCompletionBlock)completion
 {
     NSData *keyData = [NSData dataWithBytes:[key UTF8String] length:(NSUInteger)strlen([key UTF8String])];
     
-    [self setKeyWithData:keyData queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+    [self setKeyWithData:keyData queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) completion:completion];
 }
 
-- (void)setKey:(NSString *)key queue:(dispatch_queue_t)queue
+- (void)setKey:(NSString *)key queue:(dispatch_queue_t)queue completion:(WTDatabaseKeyingCompletionBlock)completion
 {
     NSData *keyData = [NSData dataWithBytes:[key UTF8String] length:(NSUInteger)strlen([key UTF8String])];
     
-    [self setKeyWithData:keyData queue:queue];
+    [self setKeyWithData:keyData queue:queue completion:completion];
 }
 
-- (void)setKeyWithData:(NSData *)keyData queue:(dispatch_queue_t)queue
+- (void)setKeyWithData:(NSData *)keyData queue:(dispatch_queue_t)queue completion:(WTDatabaseKeyingCompletionBlock)completion
 {
     __weak WTDatabase *weakSelf = self;
     dispatch_sync(queue, ^{
         WTDatabase *strongSelf = weakSelf;
+        NSError *error;
+        BOOL databaseHasError = NO;
         
-        sqlite3_key(strongSelf.database, [keyData bytes], (int)[keyData length]);
+        if (sqlite3_key(strongSelf.database, [keyData bytes], (int)[keyData length]) == SQLITE_OK) {
+            databaseHasError = NO;
+        } else {
+            error = [[strongSelf class] errorForSQLiteKeying];
+            databaseHasError = YES;
+        }
+        
+        completion(databaseHasError, error);
     });
 }
 
@@ -191,6 +200,14 @@ int const kWTDatabaseSQLStatementFailedCode = -1;
     NSString *description = @"An error has occured when executing a SQL statement";
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:description, NSLocalizedDescriptionKey, errorMessage, NSLocalizedFailureReasonErrorKey, nil];
     return [[NSError alloc] initWithDomain:kWTDatabaseErrorDomain code:kWTDatabaseSQLStatementFailedCode userInfo:userInfo];
+}
+
++ (NSError *)errorForSQLiteKeying
+{
+    NSString *errorMessage = @"Unable to set SQLCipher key";
+    NSString *description = @"An error has occured when executing SQLite Key";
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:description, NSLocalizedDescriptionKey, errorMessage, NSLocalizedFailureReasonErrorKey, nil];
+    return [[NSError alloc] initWithDomain:kWTDatabaseErrorDomain code:kWTDatabaseSQLKeyFailedCode userInfo:userInfo];
 }
 
 #pragma mark - Dynamic Property Getter and Setters

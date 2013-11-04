@@ -72,8 +72,12 @@ static dispatch_once_t _onceToken = 0;
 {
     [self.database openWithQueue:self.queue];
     
-    [self.database executeQuery:@"SELECT * FROM sqlite_master;" queue:self.queue handler:^(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError) {
-        completion(!databaseHasError);
+    [self.database setKey:key queue:self.queue completion:^(BOOL databaseHasError, NSError *error) {
+        if (databaseHasError) {
+            completion(NO);
+        } else {
+            completion(YES);
+        }
     }];
 }
 

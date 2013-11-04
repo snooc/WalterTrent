@@ -32,8 +32,9 @@
     WTDatabaseManager *manager = [[WTDatabaseManager alloc] initWithDatabaseURL:[[self class] tempDatabaseURL]];
     [manager openDatabaseWithKey:@"secret" completion:^(BOOL databaseWasKeyed) {
         XCTAssertTrue(databaseWasKeyed, @"Should successfully key database");
+        
+        [manager close];
     }];
-    [manager close];
 }
 
 - (void)testDatabaseRekeying
