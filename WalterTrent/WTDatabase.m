@@ -15,6 +15,7 @@ static BOOL const kWTDatabaseDefaultHMACPageProtection = YES;
 NSString *const kWTDatabaseErrorDomain = @"WTDatabaseErrorDomain";
 int const kWTDatabaseSQLStatementFailedCode = -1;
 int const kWTDatabaseSQLKeyFailedCode = -10;
+int const kWTDatabaseSQLiteErrorCode = -20;
 
 @interface WTDatabase ()
 
@@ -67,130 +68,107 @@ int const kWTDatabaseSQLKeyFailedCode = -10;
     return self;
 }
 
-#pragma mark - Database Keying
+#pragma mark - Database Opening and Closing
 
-- (void)setKey:(NSString *)key completion:(WTDatabaseKeyingCompletionBlock)completion
+- (void)open
 {
-    NSData *keyData = [NSData dataWithBytes:[key UTF8String] length:(NSUInteger)strlen([key UTF8String])];
-    
-    [self setKeyWithData:keyData queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) completion:completion];
+    sqlite3 *database;
+    sqlite3_open([self.databasePath UTF8String], &database);
+    self.database = database;
 }
 
-- (void)setKey:(NSString *)key queue:(dispatch_queue_t)queue completion:(WTDatabaseKeyingCompletionBlock)completion
+- (void)openWithKey:(NSString *)key completion:(WTDatabaseOpenCompletionBlock)completion
 {
     NSData *keyData = [NSData dataWithBytes:[key UTF8String] length:(NSUInteger)strlen([key UTF8String])];
+    sqlite3 *db = self.database;
+    BOOL databaseHasError = NO;
     
-    [self setKeyWithData:keyData queue:queue completion:completion];
-}
-
-- (void)setKeyWithData:(NSData *)keyData queue:(dispatch_queue_t)queue completion:(WTDatabaseKeyingCompletionBlock)completion
-{
-    __weak WTDatabase *weakSelf = self;
-    dispatch_sync(queue, ^{
-        WTDatabase *strongSelf = weakSelf;
-        NSError *error;
-        BOOL databaseHasError = NO;
-        
-        if (sqlite3_key(strongSelf.database, [keyData bytes], (int)[keyData length]) == SQLITE_OK) {
+    if (sqlite3_open([self.databasePath UTF8String], &db) == SQLITE_OK) {
+        if (sqlite3_key(db, [keyData bytes], (int)[keyData length]) == SQLITE_OK) {
             databaseHasError = NO;
         } else {
-            error = [[strongSelf class] errorForSQLiteKeying];
             databaseHasError = YES;
         }
-        
-        completion(databaseHasError, error);
-    });
+    } else {
+        databaseHasError = YES;
+    }
+    
+    if (completion) {
+        completion(databaseHasError);
+    }
+}
+
+- (void)close
+{
+    sqlite3_close(self.database);
+}
+
+#pragma mark - Database Keying
+
+- (void)setKeyWithString:(NSString *)key
+{
+    NSData *keyData = [NSData dataWithBytes:[key UTF8String] length:(NSUInteger)strlen([key UTF8String])];
+    [self setKeyWithData:keyData];
+}
+
+- (void)setKeyWithData:(NSData *)keyData
+{
+    sqlite3_key(self.database, [keyData bytes], (int)[keyData length]);
+    // TODO: Set KDF_Iterations and Cipher
 }
 
 #pragma mark - Database Execution
 
 - (void)execute:(NSString *)statement completion:(WTDatabaseCompletionBlock)completion
 {
-    [self execute:statement queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) completion:completion];
-}
-
-- (void)execute:(NSString *)statement queue:(dispatch_queue_t)queue completion:(WTDatabaseCompletionBlock)completion
-{
-    __weak WTDatabase *weakSelf = self;
-    dispatch_sync(queue, ^() {
-        WTDatabase *strongSelf = weakSelf;
-        NSError *error;
-        char *errorPointer;
-        BOOL databaseHasError = NO;
+    NSError *error;
+    char *errorPointer;
+    BOOL databaseHasError = NO;
+    
+    if (sqlite3_exec(self.database, [statement UTF8String], NULL, NULL, &errorPointer) == SQLITE_OK) {
+        databaseHasError = NO;
+    } else {
+        error = [[self class] errorWithSQLiteErrorPointer:errorPointer];
+        sqlite3_free(errorPointer);
         
-        if (sqlite3_exec(strongSelf.database, [statement UTF8String], NULL, NULL, &errorPointer) == SQLITE_OK) {
-            databaseHasError = NO;
-        } else {
-            error = [[strongSelf class] errorWithSQLiteErrorPointer:errorPointer];
-            sqlite3_free(errorPointer);
-            
-            databaseHasError = YES;
-        }
-       
-        if (completion) {
-            completion(databaseHasError, error);
-        }
-    });
+        databaseHasError = YES;
+    }
+   
+    if (completion) {
+        completion(databaseHasError, error);
+    }
 }
 
-- (void)executeQuery:(NSString *)statement handler:(WTDatabaseHandlerBlock)handler
+- (void)executeQuery:(NSString *)query handler:(WTDatabaseHandlerBlock)handler
 {
-    [self executeQuery:statement queue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) handler:handler];
+    [self executeQuery:query handler:handler completion:nil];
 }
 
-- (void)executeQuery:(NSString *)statement queue:(dispatch_queue_t)queue handler:(WTDatabaseHandlerBlock)handler
+- (void)executeQuery:(NSString *)query handler:(WTDatabaseHandlerBlock)handler completion:(WTDatabaseCompletionBlock)completion
 {
-    __weak WTDatabase *weakSelf = self;
-    dispatch_sync(queue, ^() {
-        WTDatabase *strongSelf = weakSelf;
-        sqlite3_stmt *stmt;
-        
-        if (sqlite3_prepare_v2(strongSelf.database, [statement UTF8String], -1, &stmt, NULL) == SQLITE_OK) {
-            while (sqlite3_step(stmt) == SQLITE_ROW) {
-                if (handler) {
-                    handler(strongSelf.database, stmt, NO);
-                }
+    sqlite3_stmt *stmt;
+    NSError *error;
+    BOOL databaseHasError = NO;
+    
+    if (sqlite3_prepare_v2(self.database, [query UTF8String], -1, &stmt, NULL) == SQLITE_OK) {
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            if (handler) {
+                handler(self.database, stmt, NO);
             }
         }
-        
-        sqlite3_finalize(stmt);
-    });
+        databaseHasError = NO;
+    } else {
+        error = [[self class] errorWithSQLiteErrorCode:sqlite3_errcode(self.database) message:[NSString stringWithUTF8String:sqlite3_errmsg(self.database)]];
+        databaseHasError = YES;
+    }
+    
+    sqlite3_finalize(stmt);
+    
+    if (completion) {
+        completion(databaseHasError, error);
+    }
 }
 
-#pragma mark - Open and Close Database
-
-- (void)open
-{
-    [self openWithQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
-}
-
-- (void)openWithQueue:(dispatch_queue_t)queue
-{
-    __weak WTDatabase *weakSelf = self;
-    dispatch_sync(queue, ^() {
-        WTDatabase *strongSelf = weakSelf;
-        sqlite3 *db = strongSelf.database;
-        
-        sqlite3_open([strongSelf.databasePath UTF8String], &db);
-        
-        strongSelf.database = db;
-    });
-}
-
-- (void)close
-{
-    [self closeWithQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
-}
-
-- (void)closeWithQueue:(dispatch_queue_t)queue
-{
-    __weak WTDatabase *weakSelf = self;
-    dispatch_sync(queue, ^() {
-        WTDatabase *strongSelf = weakSelf;
-        
-        sqlite3_close(strongSelf.database);
-    });
-}
 
 #pragma mark - SQLite Error Handling
 
@@ -201,13 +179,21 @@ int const kWTDatabaseSQLKeyFailedCode = -10;
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:description, NSLocalizedDescriptionKey, errorMessage, NSLocalizedFailureReasonErrorKey, nil];
     return [[NSError alloc] initWithDomain:kWTDatabaseErrorDomain code:kWTDatabaseSQLStatementFailedCode userInfo:userInfo];
 }
+                   
++ (NSError *)errorWithSQLiteErrorCode:(NSUInteger)errorCode message:(NSString *)message
+{
+    NSString *errorMessage = [NSString stringWithFormat:@"SQLite Error: %i", errorCode];
+    NSString *description = message;
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:description, NSLocalizedDescriptionKey, errorMessage, NSLocalizedFailureReasonErrorKey, nil];
+    return [[NSError alloc] initWithDomain:kWTDatabaseErrorDomain code:kWTDatabaseSQLStatementFailedCode userInfo:userInfo];
+}
 
 + (NSError *)errorForSQLiteKeying
 {
     NSString *errorMessage = @"Unable to set SQLCipher key";
     NSString *description = @"An error has occured when executing SQLite Key";
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:description, NSLocalizedDescriptionKey, errorMessage, NSLocalizedFailureReasonErrorKey, nil];
-    return [[NSError alloc] initWithDomain:kWTDatabaseErrorDomain code:kWTDatabaseSQLKeyFailedCode userInfo:userInfo];
+    return [[NSError alloc] initWithDomain:kWTDatabaseErrorDomain code:kWTDatabaseSQLiteErrorCode userInfo:userInfo];
 }
 
 #pragma mark - Dynamic Property Getter and Setters

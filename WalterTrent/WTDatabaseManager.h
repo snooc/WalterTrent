@@ -7,10 +7,7 @@
 //
 
 #import <sqlite3.h>
-
-typedef void (^WTDatabaseManagerKeyCompletionBlock)(BOOL databaseWasKeyed);
-typedef void (^WTDatabaseHandlerBlock)(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError);
-typedef void (^WTDatabaseCompletionBlock)(BOOL databaseHasError, NSError *error);
+#import "WTBlocks.h"
 
 @interface WTDatabaseManager : NSObject
 
@@ -21,8 +18,11 @@ typedef void (^WTDatabaseCompletionBlock)(BOOL databaseHasError, NSError *error)
 
 - (BOOL)databaseExists;
 
-- (void)openDatabaseWithKey:(NSString *)key completion:(WTDatabaseManagerKeyCompletionBlock)completion;
+- (void)openDatabaseWithKey:(NSString *)key completion:(WTDatabaseOpenCompletionBlock)completion;
+- (void)open;
 - (void)close;
+
+- (void)setKey:(NSString *)key;
 
 - (void)execute:(NSString *)statement completion:(WTDatabaseCompletionBlock)completion;
 - (void)executeQuery:(NSString *)statement handler:(WTDatabaseHandlerBlock)handler;

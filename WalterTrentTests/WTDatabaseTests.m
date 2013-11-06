@@ -48,7 +48,7 @@
 - (void)testDatabaseQueryExecutionWithHandler
 {
     [self.db executeQuery:@"SELECT COUNT(*) FROM sqlite_master;" handler:^(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError) {
-        XCTAssertTrue(databaseHasError == NO, @"Should be able to execute query for database");
+        XCTAssertFalse(databaseHasError, @"Should be able to execute query for database");
     }];
 }
 
@@ -86,10 +86,25 @@
 
 - (void)testDatabaseKeying
 {
-    __weak WTDatabaseTests *weakSelf = self;
-    [weakSelf.db setKey:@"secret" completion:^(BOOL databaseHasError, NSError *error) {
-        XCTAssertFalse(databaseHasError, @"Database should not have a keying error");
+    [self.db setKeyWithString:@"secret"];
+    [self.db execute:@"CREATE TABLE people (id integer PRIMARY KEY AUTOINCREMENT NOT NULL, name text, rank integer);" completion:^(BOOL databaseHasError, NSError *error) {
+        XCTAssertFalse(databaseHasError, @"Should create people table");
+    }];
+    [self.db close];
+    
+    [self.db open];
+    [self.db executeQuery:@"SELECT COUNT(id) FROM people" handler:^(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError) {
+        XCTAssertTrue(databaseHasError, @"Database should be encrypted");
+    }];
+    [self.db close];
+    
+    [self.db open];
+    [self.db setKeyWithString:@"secret"];
+    [self.db executeQuery:@"SELECT COUNT(id) FROM people" handler:^(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError) {
+        int count = sqlite3_column_int(stmt, 0);
+        XCTAssertTrue(count == 0, @"Should have no records in database.");
+        XCTAssertFalse(databaseHasError, @"Database should have no errors");
     }];
 }
-
+    
 @end

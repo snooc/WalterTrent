@@ -67,36 +67,38 @@ static dispatch_once_t _onceToken = 0;
 }
 
 #pragma mark - Open/Close Database
-
-- (void)openDatabaseWithKey:(NSString *)key completion:(WTDatabaseManagerKeyCompletionBlock)completion
-{
-    [self.database openWithQueue:self.queue];
-    
-    [self.database setKey:key queue:self.queue completion:^(BOOL databaseHasError, NSError *error) {
-        if (databaseHasError) {
-            completion(NO);
-        } else {
-            completion(YES);
-        }
-    }];
-}
-
-- (void)close
-{
-    [self.database closeWithQueue:self.queue];
-}
-
-#pragma mark - Database Execution
-
-- (void)execute:(NSString *)statement completion:(WTDatabaseCompletionBlock)completion
-{
-    [self.database execute:statement queue:self.queue completion:completion];
-}
-
-- (void)executeQuery:(NSString *)statement handler:(WTDatabaseHandlerBlock)handler
-{
-    [self.database executeQuery:statement queue:self.queue handler:handler];
-}
+//
+//- (void)openDatabaseWithKey:(NSString *)key completion:(WTDatabaseOpenCompletionBlock)completion
+//{
+//    [self.database openWithKey:key queue:self.queue completion:completion];
+//}
+//
+//- (void)open
+//{
+//    [self.database openWithQueue:self.queue];
+//}
+//
+//- (void)close
+//{
+//    [self.database closeWithQueue:self.queue];
+//}
+//
+//- (void)setKey:(NSString *)key
+//{
+//    [self.database setKey:key queue:self.queue completion:nil];
+//}
+//
+//#pragma mark - Database Execution
+//
+//- (void)execute:(NSString *)statement completion:(WTDatabaseCompletionBlock)completion
+//{
+//    [self.database execute:statement queue:self.queue completion:completion];
+//}
+//
+//- (void)executeQuery:(NSString *)statement handler:(WTDatabaseHandlerBlock)handler
+//{
+//    [self.database executeQuery:statement queue:self.queue handler:handler];
+//}
 
 #pragma mark - Support Methods
 
