@@ -30,6 +30,7 @@
 
 #pragma mark - Database Keying
 - (void)setKey:(NSString *)key;
+- (BOOL)canQueryDatabase;
 
 #pragma mark - Database Statement and Query execution
 - (void)execute:(NSString *)statement completion:(WTDatabaseCompletionBlock)completion;

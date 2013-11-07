@@ -118,6 +118,21 @@ static dispatch_once_t _onceToken = 0;
     });
 }
 
+- (BOOL)canQueryDatabase
+{
+    __block BOOL canQueryDatabase = NO;
+    __weak WTDatabaseManager *weakSelf = self;
+    dispatch_sync(self.queue, ^{
+        __strong WTDatabaseManager *strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf.database execute:@"SELECT COUNT(*) FROM sqlite_master;" completion:^(BOOL databaseHasError, NSError *error) {
+                canQueryDatabase = !databaseHasError;
+            }];
+        }
+    });
+    return canQueryDatabase;
+}
+
 #pragma mark - Database Statement and Query Execution
 
 - (void)execute:(NSString *)statement completion:(WTDatabaseCompletionBlock)completion
