@@ -80,11 +80,11 @@ int const kWTDatabaseSQLiteErrorCode = -20;
 - (void)openWithKey:(NSString *)key completion:(WTDatabaseOpenCompletionBlock)completion
 {
     NSData *keyData = [NSData dataWithBytes:[key UTF8String] length:(NSUInteger)strlen([key UTF8String])];
-    sqlite3 *db = self.database;
+    sqlite3 *database;
     BOOL databaseHasError = NO;
     
-    if (sqlite3_open([self.databasePath UTF8String], &db) == SQLITE_OK) {
-        if (sqlite3_key(db, [keyData bytes], (int)[keyData length]) == SQLITE_OK) {
+    if (sqlite3_open([self.databasePath UTF8String], &database) == SQLITE_OK) {
+        if (sqlite3_key(database, [keyData bytes], (int)[keyData length]) == SQLITE_OK) {
             databaseHasError = NO;
         } else {
             databaseHasError = YES;
@@ -92,6 +92,8 @@ int const kWTDatabaseSQLiteErrorCode = -20;
     } else {
         databaseHasError = YES;
     }
+    
+    self.database = database;
     
     if (completion) {
         completion(databaseHasError);

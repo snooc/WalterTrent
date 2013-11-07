@@ -45,14 +45,14 @@
 
 #pragma mark - Query Execution
 
-- (void)testDatabaseQueryExecutionWithHandler
+- (void)testDatabaseQueryExecution
 {
     [self.db executeQuery:@"SELECT COUNT(*) FROM sqlite_master;" handler:^(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError) {
         XCTAssertFalse(databaseHasError, @"Should be able to execute query for database");
     }];
 }
 
-- (void)testDatabaseQueryExecutionWithOutHandler
+- (void)testDatabaseStatementExecution
 {
     [self.db execute:@"CREATE TABLE people (id integer PRIMARY KEY AUTOINCREMENT NOT NULL, name text, rank integer);" completion:^(BOOL databaseHasError, NSError *error) {
         XCTAssertFalse(databaseHasError, @"Should create people table");
