@@ -43,7 +43,9 @@
 - (void)execute
 {
     __block NSString *migration = [NSString stringWithContentsOfURL:[[self class] defaultMigrationURLWithFileName:self.migrationFileName] encoding:NSUTF8StringEncoding error:nil];
-    [self.databaseManager execute:migration completion:nil];
+    [self.databaseManager execute:migration completion:^(BOOL databaseHasError, NSError *error) {
+        NSAssert(!databaseHasError, @"Error found when executing migration: %@", error.localizedFailureReason);
+    }];
 }
 
 #pragma mark - Support Methods

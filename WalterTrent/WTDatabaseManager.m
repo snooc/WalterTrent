@@ -170,6 +170,12 @@ static dispatch_once_t _onceToken = 0;
     return result;
 }
 
+- (void)deleteDatabase
+{
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    [fileManager removeItemAtURL:self.databaseURL error:nil];
+}
+
 #pragma mark - Support Methods
 
 + (NSURL *)defaultDatabaseURL

@@ -38,6 +38,9 @@
 
 - (NSNumber *)numberForQuery:(NSString *)query;
 
+#pragma mark - Delete Database
+- (void)deleteDatabase;
+
 #pragma mark - Support Methods
 + (NSURL *)defaultDatabaseURL;
 

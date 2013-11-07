@@ -52,7 +52,7 @@ static NSString * const kWTDatabaseSchemaManagerSchemaKey = @"user_version";
         NSInteger start = currentSchemaVersion + 1;
         NSInteger end = self.maximumMigration;
         
-        for (int m = start; start <= end; m++) {
+        for (int m = start; m <= end; m++) {
             WTMigration *migration = [WTMigration migrationWithInteger:m databaseManager:self.databaseManager];
             [migration execute];
         }
