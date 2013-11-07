@@ -10,5 +10,5 @@ and SQLCipher to easily interact with an encrypted SQLite database.
 #### Road Map
 - ~~Database Wrapper~~
 - ~~Database Manager with GCD queue~~
-- Schema Manager
+- ~~Schema Manager~~
 - Lightweight Model with NSCoder and NSCopying support
