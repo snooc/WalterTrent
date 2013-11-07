@@ -64,7 +64,7 @@ static dispatch_once_t _onceToken = 0;
 - (BOOL)databaseExists
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    return [fileManager fileExistsAtPath:self.database.databasePath];
+    return [fileManager fileExistsAtPath:[self.databaseURL path]];
 }
 
 #pragma mark - Open/Close Database
@@ -182,7 +182,7 @@ static dispatch_once_t _onceToken = 0;
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = ([paths count] > 0) ? [paths firstObject] : nil;
-    NSString *databasePath = [documentsPath stringByAppendingString:kWTDatabaseManagerDatabaseFileName];
+    NSString *databasePath = [documentsPath stringByAppendingPathComponent:kWTDatabaseManagerDatabaseFileName];
     return [NSURL fileURLWithPath:databasePath];
 }
 
