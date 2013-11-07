@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		060BA73B1827FF09009305F7 /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 060BA73A1827FF09009305F7 /* XCTAsyncTestCase.m */; };
+		067BFE8D182BE800009418C9 /* WTMigration.m in Sources */ = {isa = PBXBuildFile; fileRef = 067BFE8C182BE800009418C9 /* WTMigration.m */; };
+		067BFE8E182BE800009418C9 /* WTMigration.m in Sources */ = {isa = PBXBuildFile; fileRef = 067BFE8C182BE800009418C9 /* WTMigration.m */; };
 		069528F01824235D007159B6 /* libsqlcipher.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 069528EF18242338007159B6 /* libsqlcipher.a */; };
 		069528F918243ADA007159B6 /* XCTestCase+WTDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 069528F818243ADA007159B6 /* XCTestCase+WTDatabase.m */; };
 		069528FB18243C53007159B6 /* WTDatabaseManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 069528FA18243C53007159B6 /* WTDatabaseManagerTests.m */; };
@@ -69,6 +71,8 @@
 		060BA7391827FF09009305F7 /* XCTAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTAsyncTestCase.h; sourceTree = "<group>"; };
 		060BA73A1827FF09009305F7 /* XCTAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTAsyncTestCase.m; sourceTree = "<group>"; };
 		067BFE89182AF87B009418C9 /* WTBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTBlocks.h; sourceTree = "<group>"; };
+		067BFE8B182BE800009418C9 /* WTMigration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTMigration.h; sourceTree = "<group>"; };
+		067BFE8C182BE800009418C9 /* WTMigration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTMigration.m; sourceTree = "<group>"; };
 		069528E918242338007159B6 /* sqlcipher.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlcipher.xcodeproj; path = Vendor/sqlcipher/sqlcipher.xcodeproj; sourceTree = "<group>"; };
 		069528F718243ADA007159B6 /* XCTestCase+WTDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+WTDatabase.h"; sourceTree = "<group>"; };
 		069528F818243ADA007159B6 /* XCTestCase+WTDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+WTDatabase.m"; sourceTree = "<group>"; };
@@ -162,16 +166,18 @@
 		06A179B21822D5C8003A68F5 /* WalterTrent */ = {
 			isa = PBXGroup;
 			children = (
-				06A179B31822D5C8003A68F5 /* Supporting Files */,
+				067BFE89182AF87B009418C9 /* WTBlocks.h */,
 				06A179D61822E2B8003A68F5 /* WTDatabaseManager.h */,
 				06A179D71822E2B8003A68F5 /* WTDatabaseManager.m */,
 				06A179DA1822E2C9003A68F5 /* WTDatabaseSchemaManager.h */,
 				06A179DB1822E2C9003A68F5 /* WTDatabaseSchemaManager.m */,
+				067BFE8B182BE800009418C9 /* WTMigration.h */,
+				067BFE8C182BE800009418C9 /* WTMigration.m */,
 				06A179DE1822E412003A68F5 /* WTModel.h */,
 				06A179DF1822E412003A68F5 /* WTModel.m */,
-				067BFE89182AF87B009418C9 /* WTBlocks.h */,
 				06A179E21822E41A003A68F5 /* WTDatabase.h */,
 				06A179E31822E41A003A68F5 /* WTDatabase.m */,
+				06A179B31822D5C8003A68F5 /* Supporting Files */,
 			);
 			path = WalterTrent;
 			sourceTree = "<group>";
@@ -305,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				067BFE8D182BE800009418C9 /* WTMigration.m in Sources */,
 				06A179E01822E412003A68F5 /* WTModel.m in Sources */,
 				06A179DC1822E2C9003A68F5 /* WTDatabaseSchemaManager.m in Sources */,
 				06A179D81822E2B8003A68F5 /* WTDatabaseManager.m in Sources */,
@@ -318,6 +325,7 @@
 			files = (
 				06A179E11822E412003A68F5 /* WTModel.m in Sources */,
 				06A179EB1822F5D4003A68F5 /* WTDatabaseTests.m in Sources */,
+				067BFE8E182BE800009418C9 /* WTMigration.m in Sources */,
 				069528F918243ADA007159B6 /* XCTestCase+WTDatabase.m in Sources */,
 				06A179DD1822E2C9003A68F5 /* WTDatabaseSchemaManager.m in Sources */,
 				069528FB18243C53007159B6 /* WTDatabaseManagerTests.m in Sources */,

@@ -153,6 +153,23 @@ static dispatch_once_t _onceToken = 0;
     });
 }
 
+- (NSNumber *)numberForQuery:(NSString *)query
+{
+    __block NSNumber *result;
+    __weak WTDatabaseManager *weakSelf = self;
+    dispatch_sync(self.queue, ^{
+        __strong WTDatabaseManager *strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf.database executeQuery:query handler:^(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError) {
+                if (databaseHasError == NO) {
+                    result = [NSNumber numberWithInt:sqlite3_column_int(stmt, 0)];
+                }
+            }];
+        }
+    });
+    return result;
+}
+
 #pragma mark - Support Methods
 
 + (NSURL *)defaultDatabaseURL

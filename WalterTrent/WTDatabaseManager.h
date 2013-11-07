@@ -36,6 +36,8 @@
 - (void)executeQuery:(NSString *)query handler:(WTDatabaseHandlerBlock)handler;
 - (void)executeQuery:(NSString *)query handler:(WTDatabaseHandlerBlock)handler completion:(WTDatabaseCompletionBlock)completion;
 
+- (NSNumber *)numberForQuery:(NSString *)query;
+
 #pragma mark - Support Methods
 + (NSURL *)defaultDatabaseURL;
 
