@@ -11,4 +11,4 @@ and SQLCipher to easily interact with an encrypted SQLite database.
 - ~~Database Wrapper~~
 - ~~Database Manager with GCD queue~~
 - ~~Schema Manager~~
-- Lightweight Model with NSCoder and NSCopying support
+- ~~Lightweight Model~~

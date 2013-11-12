@@ -31,5 +31,6 @@
 - (NSString *)insertQueryString;
 
 + (instancetype)modelByFetchingWithPrimaryKey:(NSUInteger)primaryKey databaseManager:(WTDatabaseManager *)databaseManager;
+- (void)saveWithDatabaseManager:(WTDatabaseManager *)databaseManager;
 
 @end

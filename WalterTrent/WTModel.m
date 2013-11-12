@@ -107,7 +107,7 @@ static NSString * const kWTModelDefaultPrimaryKeyColumn = @"id";
     }
     NSString *tableName = [self tableName];
     NSString *columns = [self columnStringForQuery];
-    NSString *query = [NSString stringWithFormat:@"INSERT INTO %@ (%@) VALUES (%@)", tableName, columns, values];
+    NSString *query = [NSString stringWithFormat:@"INSERT OR REPLACE INTO %@ (%@) VALUES (%@)", tableName, columns, values];
     return query;
 }
 
@@ -188,6 +188,15 @@ static NSString * const kWTModelDefaultPrimaryKeyColumn = @"id";
     }];
     
     return model;
+}
+
+#pragma mark - Database Sync
+
+- (void)saveWithDatabaseManager:(WTDatabaseManager *)databaseManager
+{
+    [databaseManager execute:[self insertQueryString] completion:^(BOOL databaseHasError, NSError *error) {
+        NSAssert(!databaseHasError, @"Database had an error");
+    }];
 }
 
 #pragma mark - Property Helpers
