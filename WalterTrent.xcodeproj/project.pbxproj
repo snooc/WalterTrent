@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		060B338218328EBE00DE1DE4 /* WTModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B338118328EBE00DE1DE4 /* WTModelTests.m */; };
+		060B338718328EEE00DE1DE4 /* WTCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B338618328EEE00DE1DE4 /* WTCar.m */; };
+		060B338A18329A1800DE1DE4 /* NSString+Inflections.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B338918329A1800DE1DE4 /* NSString+Inflections.m */; };
+		060B338B18329A1800DE1DE4 /* NSString+Inflections.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B338918329A1800DE1DE4 /* NSString+Inflections.m */; };
+		060B33971832B02100DE1DE4 /* NSString+WTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B33961832B02100DE1DE4 /* NSString+WTModel.m */; };
+		060B33981832B02100DE1DE4 /* NSString+WTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B33961832B02100DE1DE4 /* NSString+WTModel.m */; };
+		060B339B1832B05E00DE1DE4 /* NSNumber+WTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B339A1832B05E00DE1DE4 /* NSNumber+WTModel.m */; };
+		060B339C1832B05E00DE1DE4 /* NSNumber+WTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B339A1832B05E00DE1DE4 /* NSNumber+WTModel.m */; };
+		060B33A01832B09D00DE1DE4 /* NSDate+WTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B339F1832B09D00DE1DE4 /* NSDate+WTModel.m */; };
+		060B33A11832B09D00DE1DE4 /* NSDate+WTModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 060B339F1832B09D00DE1DE4 /* NSDate+WTModel.m */; };
 		060BA73B1827FF09009305F7 /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 060BA73A1827FF09009305F7 /* XCTAsyncTestCase.m */; };
 		067BFE8D182BE800009418C9 /* WTMigration.m in Sources */ = {isa = PBXBuildFile; fileRef = 067BFE8C182BE800009418C9 /* WTMigration.m */; };
 		067BFE8E182BE800009418C9 /* WTMigration.m in Sources */ = {isa = PBXBuildFile; fileRef = 067BFE8C182BE800009418C9 /* WTMigration.m */; };
@@ -68,6 +78,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		060B338118328EBE00DE1DE4 /* WTModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTModelTests.m; sourceTree = "<group>"; };
+		060B338518328EEE00DE1DE4 /* WTCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WTCar.h; sourceTree = "<group>"; };
+		060B338618328EEE00DE1DE4 /* WTCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WTCar.m; sourceTree = "<group>"; };
+		060B338818329A1800DE1DE4 /* NSString+Inflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Inflections.h"; sourceTree = "<group>"; };
+		060B338918329A1800DE1DE4 /* NSString+Inflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Inflections.m"; sourceTree = "<group>"; };
+		060B33951832B02100DE1DE4 /* NSString+WTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WTModel.h"; sourceTree = "<group>"; };
+		060B33961832B02100DE1DE4 /* NSString+WTModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WTModel.m"; sourceTree = "<group>"; };
+		060B33991832B05E00DE1DE4 /* NSNumber+WTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+WTModel.h"; sourceTree = "<group>"; };
+		060B339A1832B05E00DE1DE4 /* NSNumber+WTModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+WTModel.m"; sourceTree = "<group>"; };
+		060B339E1832B09D00DE1DE4 /* NSDate+WTModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WTModel.h"; sourceTree = "<group>"; };
+		060B339F1832B09D00DE1DE4 /* NSDate+WTModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WTModel.m"; sourceTree = "<group>"; };
 		060BA7391827FF09009305F7 /* XCTAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTAsyncTestCase.h; sourceTree = "<group>"; };
 		060BA73A1827FF09009305F7 /* XCTAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTAsyncTestCase.m; sourceTree = "<group>"; };
 		067BFE89182AF87B009418C9 /* WTBlocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTBlocks.h; sourceTree = "<group>"; };
@@ -123,6 +144,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		060B338418328EC700DE1DE4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				060B338518328EEE00DE1DE4 /* WTCar.h */,
+				060B338618328EEE00DE1DE4 /* WTCar.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		060B339D1832B08B00DE1DE4 /* Data Categories */ = {
+			isa = PBXGroup;
+			children = (
+				060B33951832B02100DE1DE4 /* NSString+WTModel.h */,
+				060B33961832B02100DE1DE4 /* NSString+WTModel.m */,
+				060B33991832B05E00DE1DE4 /* NSNumber+WTModel.h */,
+				060B339A1832B05E00DE1DE4 /* NSNumber+WTModel.m */,
+				060B339E1832B09D00DE1DE4 /* NSDate+WTModel.h */,
+				060B339F1832B09D00DE1DE4 /* NSDate+WTModel.m */,
+			);
+			name = "Data Categories";
+			sourceTree = "<group>";
+		};
 		069528EA18242338007159B6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +209,7 @@
 		06A179B21822D5C8003A68F5 /* WalterTrent */ = {
 			isa = PBXGroup;
 			children = (
+				060B339D1832B08B00DE1DE4 /* Data Categories */,
 				067BFE89182AF87B009418C9 /* WTBlocks.h */,
 				06A179D61822E2B8003A68F5 /* WTDatabaseManager.h */,
 				06A179D71822E2B8003A68F5 /* WTDatabaseManager.m */,
@@ -177,6 +221,8 @@
 				06A179DF1822E412003A68F5 /* WTModel.m */,
 				06A179E21822E41A003A68F5 /* WTDatabase.h */,
 				06A179E31822E41A003A68F5 /* WTDatabase.m */,
+				060B338818329A1800DE1DE4 /* NSString+Inflections.h */,
+				060B338918329A1800DE1DE4 /* NSString+Inflections.m */,
 				06A179B31822D5C8003A68F5 /* Supporting Files */,
 			);
 			path = WalterTrent;
@@ -193,8 +239,10 @@
 		06A179C61822D5C8003A68F5 /* WalterTrentTests */ = {
 			isa = PBXGroup;
 			children = (
+				060B338418328EC700DE1DE4 /* Helpers */,
 				06A179EA1822F5D4003A68F5 /* WTDatabaseTests.m */,
 				069528FA18243C53007159B6 /* WTDatabaseManagerTests.m */,
+				060B338118328EBE00DE1DE4 /* WTModelTests.m */,
 				069528F718243ADA007159B6 /* XCTestCase+WTDatabase.h */,
 				069528F818243ADA007159B6 /* XCTestCase+WTDatabase.m */,
 				060BA7391827FF09009305F7 /* XCTAsyncTestCase.h */,
@@ -311,10 +359,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				060B338A18329A1800DE1DE4 /* NSString+Inflections.m in Sources */,
 				067BFE8D182BE800009418C9 /* WTMigration.m in Sources */,
 				06A179E01822E412003A68F5 /* WTModel.m in Sources */,
 				06A179DC1822E2C9003A68F5 /* WTDatabaseSchemaManager.m in Sources */,
+				060B33A01832B09D00DE1DE4 /* NSDate+WTModel.m in Sources */,
+				060B33971832B02100DE1DE4 /* NSString+WTModel.m in Sources */,
 				06A179D81822E2B8003A68F5 /* WTDatabaseManager.m in Sources */,
+				060B339B1832B05E00DE1DE4 /* NSNumber+WTModel.m in Sources */,
 				06A179E41822E41A003A68F5 /* WTDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,14 +376,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				06A179E11822E412003A68F5 /* WTModel.m in Sources */,
+				060B33A11832B09D00DE1DE4 /* NSDate+WTModel.m in Sources */,
+				060B338718328EEE00DE1DE4 /* WTCar.m in Sources */,
 				06A179EB1822F5D4003A68F5 /* WTDatabaseTests.m in Sources */,
+				060B338218328EBE00DE1DE4 /* WTModelTests.m in Sources */,
 				067BFE8E182BE800009418C9 /* WTMigration.m in Sources */,
 				069528F918243ADA007159B6 /* XCTestCase+WTDatabase.m in Sources */,
+				060B338B18329A1800DE1DE4 /* NSString+Inflections.m in Sources */,
 				06A179DD1822E2C9003A68F5 /* WTDatabaseSchemaManager.m in Sources */,
+				060B339C1832B05E00DE1DE4 /* NSNumber+WTModel.m in Sources */,
 				069528FB18243C53007159B6 /* WTDatabaseManagerTests.m in Sources */,
 				06A179D91822E2B8003A68F5 /* WTDatabaseManager.m in Sources */,
 				060BA73B1827FF09009305F7 /* XCTAsyncTestCase.m in Sources */,
 				06A179E51822E41A003A68F5 /* WTDatabase.m in Sources */,
+				060B33981832B02100DE1DE4 /* NSString+WTModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

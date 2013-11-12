@@ -8,6 +8,7 @@
 
 #import "WTDatabaseManager.h"
 #import "WTDatabase.h"
+#import "WTModel.h"
 
 static NSString * const kWTDatabaseManagerDatabaseFileName = @"data.sqlite";
 static NSString * const kWTDatabaseManagerQueueName = @"waltertrent.databasemanager.serial";

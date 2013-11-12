@@ -9,6 +9,8 @@
 #import <sqlite3.h>
 #import "WTBlocks.h"
 
+@class WTModel;
+
 @interface WTDatabaseManager : NSObject
 
 @property (nonatomic, strong) NSURL *databaseURL;
