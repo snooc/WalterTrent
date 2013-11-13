@@ -140,4 +140,31 @@
     [[self class] deleteTempDatabaseWithURL:dbURL];
 }
 
+- (void)testFetchAllFromDatabase
+{
+    NSURL *dbURL = [[self class] tempDatabaseURL];
+    WTDatabaseManager *dbm = [[WTDatabaseManager alloc] initWithDatabaseURL:dbURL];
+    
+    [dbm open];
+    
+    NSString *create = @"CREATE TABLE cars (id integer PRIMARY KEY AUTOINCREMENT NOT NULL, make text, model text, year integer, date_of_birth text, untagged text);";
+    [dbm execute:create completion:^(BOOL databaseHasError, NSError *error) {
+        XCTAssertFalse(databaseHasError, @"Should create table");
+    }];
+    
+    [dbm execute:@"INSERT INTO cars (id, make, model, year, date_of_birth, untagged) VALUES (NULL, 'Ford', 'F150', 2012, '2013-11-12', 'Not sure what this is....');" completion:^(BOOL databaseHasError, NSError *error) {
+        XCTAssertFalse(databaseHasError, @"Should insert record");
+    }];
+    [dbm execute:@"INSERT INTO cars (id, make, model, year, date_of_birth, untagged) VALUES (NULL, 'GMC', '2500', 2012, '2011-09-02', 'Cool!');" completion:^(BOOL databaseHasError, NSError *error) {
+        XCTAssertFalse(databaseHasError, @"Should insert record");
+    }];
+    
+    NSArray *all = [WTCar fetchAllWithDatebaseManager:dbm];
+    XCTAssertTrue([all count] == 2, @"There should be two models");
+    
+    [dbm close];
+    
+    [[self class] deleteTempDatabaseWithURL:dbURL];
+}
+
 @end

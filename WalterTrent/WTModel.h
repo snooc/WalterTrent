@@ -26,10 +26,12 @@
 + (NSString *)primaryKeyColumn;
 + (NSString *)primaryKeyProperty;
 
-- (NSString *)columnStringForQuery;
++ (NSString *)columnStringForQuery;
 - (NSString *)selectQueryString;
++ (NSString *)selectQueryString;
 - (NSString *)insertQueryString;
 
++ (NSArray *)fetchAllWithDatebaseManager:(WTDatabaseManager *)databaseManager;
 + (instancetype)modelByFetchingWithPrimaryKey:(NSUInteger)primaryKey databaseManager:(WTDatabaseManager *)databaseManager;
 - (void)saveWithDatabaseManager:(WTDatabaseManager *)databaseManager;
 

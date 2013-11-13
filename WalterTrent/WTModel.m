@@ -66,12 +66,13 @@ static NSString * const kWTModelDefaultPrimaryKeyColumn = @"id";
 
 #pragma mark - Query and Statement Strings
 
-- (NSString *)columnStringForQuery
++ (NSString *)columnStringForQuery
 {
+    NSArray *databaseColumns = [[self class] databaseColumnsForClass];
     NSMutableString *columns = [NSMutableString string];
-    NSInteger columnsCount = [self.databaseColumns count];
+    NSInteger columnsCount = [databaseColumns count];
     for (int c = 0; c < columnsCount; c++) {
-        NSString *column = [self.databaseColumns objectAtIndex:c];
+        NSString *column = [databaseColumns objectAtIndex:c];
         
         if (c == (columnsCount - 1)) {
             [columns appendString:column];
@@ -82,9 +83,15 @@ static NSString * const kWTModelDefaultPrimaryKeyColumn = @"id";
     return columns;
 }
 
++ (NSString *)selectQueryString
+{
+    NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@", [[self class] columnStringForQuery], [[self class] tableName]];
+    return query;
+}
+
 - (NSString *)selectQueryString
 {
-    NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@", [self columnStringForQuery], [[self class] tableName]];
+    NSString *query = [NSString stringWithFormat:@"SELECT %@ FROM %@", [[self class] columnStringForQuery], [[self class] tableName]];
     return query;
 }
 
@@ -106,7 +113,7 @@ static NSString * const kWTModelDefaultPrimaryKeyColumn = @"id";
         }
     }
     NSString *tableName = [self tableName];
-    NSString *columns = [self columnStringForQuery];
+    NSString *columns = [[self class] columnStringForQuery];
     NSString *query = [NSString stringWithFormat:@"INSERT OR REPLACE INTO %@ (%@) VALUES (%@)", tableName, columns, values];
     return query;
 }
@@ -145,6 +152,52 @@ static NSString * const kWTModelDefaultPrimaryKeyColumn = @"id";
 }
 
 #pragma mark - Database Fetch
+
++ (NSArray *)fetchAllWithDatebaseManager:(WTDatabaseManager *)databaseManager
+{
+    __block NSMutableArray *models = [NSMutableArray array];
+    
+    NSString *query = [[self class] selectQueryString];
+    [databaseManager executeQuery:query handler:^(sqlite3 *database, sqlite3_stmt *stmt, BOOL databaseHasError) {
+        if (databaseHasError) {
+            NSAssert(YES, @"Unable to fetch all");
+        }
+       
+        WTModel *model = [[self alloc] init];
+        int columnCount = sqlite3_column_count(stmt);
+        for (int c = 0; c < columnCount; c++) {
+            NSString *column = [NSString stringWithUTF8String:sqlite3_column_name(stmt, c)];
+            
+            NSInteger columnIndex = [model.databaseColumns indexOfObject:column];
+            NSString *property = [model.propertyKeys objectAtIndex:columnIndex];
+            NSString *propertyType = [model.propertyTypes objectAtIndex:columnIndex];
+            
+            NSString *propertyValue = [NSString stringWithUTF8String:(char *)sqlite3_column_text(stmt, c)];
+            
+            id value;
+            if (propertyValue) {
+                Class propertyClass = NSClassFromString(propertyType);
+                if (propertyClass) {
+                    value = [propertyClass alloc];
+                    
+                    SEL selector = NSSelectorFromString(@"initWithDatabaseString:");
+                    if ([value respondsToSelector:selector]) {
+                        value = objc_msgSend(value, selector, propertyValue);
+                    }
+                } else {
+                    value = nil;
+                }
+            } else {
+                value = nil;
+            }
+            
+            [model setValue:value forKey:property];
+        }
+        [models addObject:model];
+    }];
+    
+    return models;
+}
 
 + (instancetype)modelByFetchingWithPrimaryKey:(NSUInteger)primaryKey databaseManager:(WTDatabaseManager *)databaseManager
 {
