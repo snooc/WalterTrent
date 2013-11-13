@@ -172,23 +172,26 @@ static NSString * const kWTModelDefaultPrimaryKeyColumn = @"id";
             NSString *property = [model.propertyKeys objectAtIndex:columnIndex];
             NSString *propertyType = [model.propertyTypes objectAtIndex:columnIndex];
             
-            NSString *propertyValue = [NSString stringWithUTF8String:(char *)sqlite3_column_text(stmt, c)];
-            
             id value;
-            if (propertyValue) {
-                Class propertyClass = NSClassFromString(propertyType);
-                if (propertyClass) {
-                    value = [propertyClass alloc];
-                    
-                    SEL selector = NSSelectorFromString(@"initWithDatabaseString:");
-                    if ([value respondsToSelector:selector]) {
-                        value = objc_msgSend(value, selector, propertyValue);
+            const unsigned char *propertyCString = sqlite3_column_text(stmt, c);
+            if (propertyCString) {
+                NSString *propertyValue = [NSString stringWithUTF8String:(char *)sqlite3_column_text(stmt, c)];
+                
+                if (propertyValue) {
+                    Class propertyClass = NSClassFromString(propertyType);
+                    if (propertyClass) {
+                        value = [propertyClass alloc];
+                        
+                        SEL selector = NSSelectorFromString(@"initWithDatabaseString:");
+                        if ([value respondsToSelector:selector]) {
+                            value = objc_msgSend(value, selector, propertyValue);
+                        }
+                    } else {
+                        value = nil;
                     }
                 } else {
                     value = nil;
                 }
-            } else {
-                value = nil;
             }
             
             [model setValue:value forKey:property];
@@ -248,7 +251,7 @@ static NSString * const kWTModelDefaultPrimaryKeyColumn = @"id";
 - (void)saveWithDatabaseManager:(WTDatabaseManager *)databaseManager
 {
     [databaseManager execute:[self insertQueryString] completion:^(BOOL databaseHasError, NSError *error) {
-        NSAssert(!databaseHasError, @"Database had an error");
+        NSAssert(!databaseHasError, @"Database had an error: %@", error.localizedFailureReason);
     }];
 }
 
