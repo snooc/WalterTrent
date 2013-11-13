@@ -53,7 +53,7 @@
     coolestCar.dateOfBirth = [NSDate date];
     coolestCar.untagged = @"Not sure what this is....";
     NSString *query = [coolestCar insertQueryString];
-    XCTAssertTrue([query isEqualToString:@"INSERT OR REPLACE INTO cars (id, make, model, year, date_of_birth, untagged) VALUES (NULL, 'Ford', 'F150', 2012, '2013-11-12', 'Not sure what this is....')"], @"Insert query should be correct");
+    XCTAssertTrue([query isEqualToString:@"INSERT OR REPLACE INTO cars (id, make, model, year, date_of_birth, untagged) VALUES (NULL, 'Ford', 'F150', 2012, '2013-11-13', 'Not sure what this is....')"], @"Insert query should be correct");
 }
 
 - (void)testDatabaseFetching
@@ -130,8 +130,8 @@
     
     WTCar *car2 = [WTCar modelByFetchingWithPrimaryKey:theID databaseManager:dbm];
     
-//    XCTAssertTrue([car2.make isEqualToString:@"Taurus"], @"Car two should be a Taurus");
-//    XCTAssertTrue([car2.model isEqualToString:@"Ford"], @"Car two should be a Ford!");
+    XCTAssertTrue([car2.make isEqualToString:@"Ford"], @"Car two should be a Ford");
+    XCTAssertTrue([car2.model isEqualToString:@"Taurus"], @"Car two should be a Taurus");
     XCTAssertTrue([car2.year intValue] == 2012, @"Car two should be a 2012");
     XCTAssertTrue([car2.dbID intValue] == theID, @"ID should be correct");
     
