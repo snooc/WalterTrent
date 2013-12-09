@@ -12,12 +12,15 @@
 
 - (id)initWithDatabaseString:(NSString *)databaseString
 {
-    return [self initWithString:databaseString];
+    NSString *unescapedString = [databaseString stringByReplacingOccurrencesOfString:@"''" withString:@"'"];
+    return [self initWithString:unescapedString];
 }
 
 - (NSString *)databaseValueString
 {
-    return [NSString stringWithFormat:@"'%@'", self];
+    NSString *valueString = [NSString stringWithFormat:@"%@", self];
+    NSString *escapedValueString = [valueString stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+    return [NSString stringWithFormat:@"'%@'", escapedValueString];
 }
 
 @end
